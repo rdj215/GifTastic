@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="button-row">
+
+            <button class="gif-button" data-gif="Samuel Jackson">Samuel Jackson</button>
+            <button class="gif-button" data-gif="dogs">Dogs</button>
+            <button class="gif-button" data-gif="money">Money</button>
+
+    </div>
+    
+    <form id="submit-form">
+            <input id="input"  type="text" name="search gifs"  value=>
+            <br>
+            <button class="input-button" value="submit">Submit</button>
+        </form>
+<div id="images">
+</div>
+
+
+
+
+    
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script type="text/javascript">
+   
+  var searchButton;
+    
+     $(".gif-button").click(function(){
+       
+    $("#images").empty();
+    var searchButton = $(this).data('gif')
+    console.log(searchButton)
+  
+    
+
+    
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        searchButton + "&api_key=dc6zaTOxFJmzC&limit=10";
+    
+    //Calling API for JSON 
+    $.ajax({
+       url: queryURL,
+       method: "GET" 
+    }).then(function(response){
+
+        var gifArray = response.data 
+        for(i=0; i<gifArray.length; i++){
+            var rating = gifArray[i].rating;
+            var stillUrl = gifArray[i].images.fixed_height_still.url
+            var gifUrl = gifArray[i].images.fixed_height.url
+            var p = $('<p>').text("fuck");
+            var searchImages = $("<img>");
+
+            searchImages.attr("src", gifUrl );
+            searchImages.attr("alt", "still gif");
+            searchImages.addClass('giff');
+            
+            $("#images").append(searchImages, "Rating:" + rating);
+            
+
+            
+            
+            console.log(searchImages)
+        }
+         });
+
+         
+   
+    
+    });
+
+     var newButton;
+   
+
+   $('#submit-form').submit(function(){
+       var buttonRow = document.getElementById("button-row");
+        var input = $('#input').val().trim();
+       var newButton = document.createElement("button");
+       buttonRow.appendChild(newButton);
+       
+   console.log(input)
+    });
+
+
+
+   //var input = $('#input').val();
+   //var newGifButton = document.createElement('button');
+
+   //newGifButton.textContent = input;
+        
+
+
+   // $('#input-button').click(function(){
+        //var input = $('#input').val();
+   //var newGifButton = document.createElement('button');
+
+   //newGifButton.textContent = input;
+        
+       // console.log('ryan')
+   
+
+    /*var search = function button(){
+          console.log( $("#input").val($("<button>")));
+           console.log( $("button").text($('#input')));
+        };
+    
+    $(".giff").click(function(){
+
+        //var state = $(this).attr("src")
+        
+        if (searchImages === stillUrl){
+            $(this).attr("src", $(this).attr(gifUrl));
+            
+        }
+
+        else {
+            $(this).attr("src", $(this).attr(stillUrl));
+        }; */
+
+     
+        
+   // });
+   
+    
+    
+</script>
+</html>
